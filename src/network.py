@@ -22,6 +22,17 @@ TEST_DATASET = "test.csv"
 # Load the train data
 TRAIN_DATASET = pd.read_csv(DATA_PATH + TRAIN_DATASET)
 
-print(TRAIN_DATASET.loc[(TRAIN_DATASET["Sex"]=="male") & (TRAIN_DATASET["Pclass"] < 2)])
+# Check if there is any NaN values in the dataset
+print(TRAIN_DATASET.isnull().values.any())
+
+# Insert a missing data into the cabin C148 and ticket 111369 in its Fare column
+TRAIN_DATASET.loc[(TRAIN_DATASET["Cabin"] == "C148") & (TRAIN_DATASET["Ticket"] == "111369")] = None
+
+# Print the whole dataset
+print(TRAIN_DATASET.loc[(TRAIN_DATASET["Sex"] == "male") & (TRAIN_DATASET["Pclass"] < 2)])
+
+# Describe the data frame
+# print(TRAIN_DATASET.describe())
+# print(TRAIN_DATASET.loc[(TRAIN_DATASET["Sex"]=="male") & (TRAIN_DATASET["Pclass"] < 2)])
 # Boolean Indexing 
 #TRAIN_DATASET.loc([])
