@@ -14,6 +14,15 @@ import tensorflow as tf
 import pandas as pd
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import OneHotEncoder
+
+
+def clean_dataset(df):
+    assert isinstance(df, pd.DataFrame), "df needs to be a pd.DataFrame"
+    df.dropna(inplace=True)
+    indices_to_keep = ~df.isin([np.nan, np.inf, -np.inf]).any(1)
+    return df[indices_to_keep].astype(np.float64)
 
 DATA_PATH = "./data/"
 
@@ -27,17 +36,24 @@ TRAIN_DATASET = pd.read_csv(DATA_PATH + TRAIN_DATASET)
 TEST_DATASET = pd.read_csv(DATA_PATH + TEST_DATASET)
 
 # Create the model
-DT_MODEL = DecisionTreeClassifier()
+DT_MODEL = MLPClassifier()
 
 # Grab the targets
 TARGETS = TRAIN_DATASET["Survived"]
-TRAIN_DATASET.drop('Survived')
+TRAIN_DATASET.drop('Survived', axis=1, inplace=True)
+
 
 # Train the model
-DT_MODEL.fit(TRAIN_DATASET, TARGETS)
+LATENT = pd.get_dummies(TRAIN_DATASET)
+
+# Clean the dataset
+LATENT = clean_dataset(LATENT)
+
+DT_MODEL.fit(LATENT, TARGETS)
 
 # Prediction
 print(DT_MODEL.predict(TEST_DATASET))
+
 # # Check if there is any NaN values in the dataset
 # print(TRAIN_DATASET.isnull().values.any())
 
