@@ -70,9 +70,9 @@ fig.canvas.set_window_title("Analaysis of Gender Effect on Survivals")
 
 male_survival = fig.add_subplot(121)
 train_data.Survived[train_data['Sex'] == 'male'].value_counts().plot(kind='pie')
-male_survival.title.set_text("Male Survivals")
+male_survival.set_title("Male Survivals")
 
 female_survival = fig.add_subplot(122)
 train_data.Survived[train_data['Sex'] == 'female'].value_counts().plot(kind='pie')
-female_survival.title.set_text("Female Survivals")
+female_survival.set_title("Female Survivals")
 plt.show()
