@@ -39,6 +39,10 @@ def separate_output(str):
         print("#", end="")
     print('\n')
 
+# This will fill the NaN values in columns
+def fill_with_mean(df):
+    return df.fillna(df.mean())
+
 # Load the train and test data
 train_data = pd.read_csv(DATA_ROOT + 'train.csv')
 test_data = pd.read_csv(DATA_ROOT + 'test.csv')
@@ -56,7 +60,8 @@ print(train_data.describe())
 DROPPED_COLS = ['PassengerId',
                 'Name',
                 'Ticket',
-                'Cabin']
+                'Cabin',
+                'Embarked']
 
 # Drop the PassengerId column
 train_data.drop(DROPPED_COLS, axis=1, inplace=True)
@@ -90,7 +95,9 @@ print(train_data.select_dtypes(include=[object]))
 
 # Convert the categorical data into numerical form
 train_data['Sex'] = LabelEncoder().fit_transform(train_data['Sex'])
-train_data['Embarked'] = LabelEncoder().fit_transform(train_data['Embarked'])
+
+# Remove the NaN values from Age column
+train_data = fill_with_mean(train_data)
 
 # Display the data again
 separate_output("Final Data")
