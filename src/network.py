@@ -98,7 +98,7 @@ male_survival.set_title("Male Survivals")
 female_survival = fig.add_subplot(122)
 train_data.Survived[train_data['Sex'] == 'female'].value_counts().plot(kind='pie')
 female_survival.set_title("Female Survivals")
-plt.show()
+# plt.show()
 
 # Let's see the data types
 separate_output("Datatypes")
@@ -147,7 +147,7 @@ train_labels = train_data['Survived']
 train_data.drop('Survived', axis=1, inplace=True)
 X_train, X_test, y_train, y_test = train_test_split(train_data, train_labels, test_size=0.2, random_state=42)
 
-for model in models:
+for model in MODELS:
     model.fit(X_train, y_train)
     score = model.score(X_test, y_test)
     print(score)
