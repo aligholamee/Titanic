@@ -23,6 +23,8 @@ from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
 
 DATA_ROOT = './data/'
 SHARP_COUNT = 100
@@ -149,7 +151,11 @@ X_train, X_test, y_train, y_test = train_test_split(train_data, train_labels, te
 
 for model in MODELS:
     model.fit(X_train, y_train)
-    score = model.score(X_test, y_test)
-    print(score)
+    prediction = model.predict(X_test)
+    rscore = recall_score(y_test, prediction)
+    f1score = f1_score(y_test, prediction)
 
-# Using PYCM to display the exact accuracy and the results
+    print("Recall: ", rscore)
+    print("F-1 Score: ", f1score)
+    # score = recall_score(y_train, y_pred)
+    # print(score)
