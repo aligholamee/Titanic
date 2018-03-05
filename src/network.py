@@ -49,7 +49,7 @@ LATENT = pd.get_dummies(TRAIN_DATASET)
 # Clean the dataset
 LATENT = clean_dataset(LATENT)
 
-DT_MODEL.fit(LATENT, TARGETS)
+DT_MODEL.fit(np.transpose(LATENT), TARGETS)
 
 # Prediction
 print(DT_MODEL.predict(TEST_DATASET))
