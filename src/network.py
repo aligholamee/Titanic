@@ -65,9 +65,14 @@ print(train_data.describe())
 
 # Check if the gender affect the survivals
 # Plot the figures for male and female
-fig = plt.figure(figsize=(8, 4))
-fig.add_subplot(121)
+fig = plt.figure(figsize=(8, 4), dpi=120, facecolor='w', edgecolor='k')
+fig.canvas.set_window_title("Analaysis of Gender Effect on Survivals")
+
+male_survival = fig.add_subplot(121)
 train_data.Survived[train_data['Sex'] == 'male'].value_counts().plot(kind='pie')
-fig.add_subplot(122)
+male_survival.title.set_text("Male Survivals")
+
+female_survival = fig.add_subplot(122)
 train_data.Survived[train_data['Sex'] == 'female'].value_counts().plot(kind='pie')
+female_survival.title.set_text("Female Survivals")
 plt.show()
