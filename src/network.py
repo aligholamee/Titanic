@@ -22,6 +22,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+from sklearn.model_selection import train_test_split
 
 DATA_ROOT = './data/'
 SHARP_COUNT = 100
@@ -144,6 +145,9 @@ MODELS = [
 # Split the train and test data
 train_labels = train_data['Survived']
 train_data.drop('Survived', axis=1, inplace=True)
+X_train, X_test, y_train, y_test = train_test_split(train_data, train_labels, test_size=0.2, random_state=42)
 
-for model in MODELS:
-    model.fit(train_data, train_labels)
+for model in models:
+    model.fit(X_train, y_train)
+    score = model.score(X_test, y_test)
+    print(score)
