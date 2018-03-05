@@ -10,62 +10,41 @@
     Kaggle competition, predicting the survivals of the Titanic!
 """
 
-import tensorflow as tf
 import pandas as pd
 import numpy as np
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.preprocessing import OneHotEncoder
+import matplotlib.pyplot as plt
 
+DATA_ROOT = './data/'
+SHARP_COUNT = 100
+# Simple output separator for the terminal displays
+def separate_output(str):
+    print('\n')
+    for i in range(SHARP_COUNT):
+        if(i == SHARP_COUNT-1):
+            print("#")
+        else:
+            print("#", end="")
 
-def clean_dataset(df):
-    assert isinstance(df, pd.DataFrame), "df needs to be a pd.DataFrame"
-    df.dropna(inplace=True)
-    indices_to_keep = ~df.isin([np.nan, np.inf, -np.inf]).any(1)
-    return df[indices_to_keep].astype(np.float64)
+    # Display info at the center
+    for i in range(int((SHARP_COUNT/2-len(str)/2))):
+        print("",end=" ")
 
-DATA_PATH = "./data/"
+    print(str)
 
-TRAIN_DATASET = "train.csv"
-TEST_DATASET = "test.csv"
+    for i in range(SHARP_COUNT):
+        print("#", end="")
+    print('\n')
 
-# Load the train data
-TRAIN_DATASET = pd.read_csv(DATA_PATH + TRAIN_DATASET)
+# Load the train and test data
+train_data = pd.read_csv(DATA_ROOT + 'train.csv')
+test_data = pd.read_csv(DATA_ROOT + 'test.csv')
 
-# Load the test data
-TEST_DATASET = pd.read_csv(DATA_PATH + TEST_DATASET)
+# Get the shape of data
+separate_output("Train/Test Shapes")
+print(train_data.shape)
+print(test_data.shape)
 
-# Create the model
-DT_MODEL = MLPClassifier()
+# General analysis of data
+separate_output("General Data Knowledge")
+print(train_data.describe())
 
-# Grab the targets
-TARGETS = TRAIN_DATASET["Survived"]
-TRAIN_DATASET.drop('Survived', axis=1, inplace=True)
-
-
-# Train the model
-LATENT = pd.get_dummies(TRAIN_DATASET)
-
-# Clean the dataset
-LATENT = clean_dataset(LATENT)
-
-DT_MODEL.fit(np.transpose(LATENT), TARGETS)
-
-# Prediction
-print(DT_MODEL.predict(TEST_DATASET))
-
-# # Check if there is any NaN values in the dataset
-# print(TRAIN_DATASET.isnull().values.any())
-
-# # Fill the missing data using filna :D
-# TRAIN_DATASET["Cabin"].fillna("Missing")
-# TRAIN_DATASET.fillna(0)
-
-# # Print the whole dataset
-# print(TRAIN_DATASET.loc[(TRAIN_DATASET["Sex"] == "male") & (TRAIN_DATASET["Pclass"] < 2)])
-
-# Describe the data frame
-# print(TRAIN_DATASET.describe())
-# print(TRAIN_DATASET.loc[(TRAIN_DATASET["Sex"]=="male") & (TRAIN_DATASET["Pclass"] < 2)])
-# Boolean Indexing 
-#TRAIN_DATASET.loc([])
