@@ -13,7 +13,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 DATA_ROOT = './data/'
 SHARP_COUNT = 100
@@ -99,7 +99,19 @@ train_data['Sex'] = LabelEncoder().fit_transform(train_data['Sex'])
 # Remove the NaN values from Age column
 train_data = fill_with_mean(train_data)
 
+# Scale the data to normalize the mean and variance
+ss = StandardScaler().fit(train_data)
+
 # Display the data again
 separate_output("Final Data")
+train_data = pd.DataFrame(ss.transform(train_data))
 print(train_data)
+
+# Describe the status of final data
+separate_output("Final Data Description")
+print(train_data.describe())
+
+
+
+
 
