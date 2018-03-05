@@ -90,6 +90,7 @@ print(train_data.select_dtypes(include=[object]))
 
 # Convert the categorical data into numerical form
 train_data['Sex'] = LabelEncoder().fit_transform(train_data['Sex'])
+train_data['Embarked'] = LabelEncoder().fit_transform(train_data['Embarked'])
 
 # Display the data again
 separate_output("Final Data")
