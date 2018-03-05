@@ -51,3 +51,23 @@ print(test_data.shape)
 separate_output("General Data Knowledge")
 print(train_data.describe())
 
+# Drop the PassengerId column
+train_data.drop('PassengerId', axis=1, inplace=True)
+
+# Get the shape of data
+separate_output("Train/Test Shapes -- Dropped PassengerId")
+print(train_data.shape)
+print(test_data.shape)
+
+# General analysis of data
+separate_output("General Data Knowledge -- Dropped PassengerId")
+print(train_data.describe())
+
+# Check if the gender affect the survivals
+# Plot the figures for male and female
+fig = plt.figure(figsize=(8, 4))
+fig.add_subplot(121)
+train_data.Survived[train_data['Sex'] == 'male'].value_counts().plot(kind='pie')
+fig.add_subplot(122)
+train_data.Survived[train_data['Sex'] == 'female'].value_counts().plot(kind='pie')
+plt.show()
