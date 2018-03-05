@@ -25,6 +25,7 @@ from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
 DATA_ROOT = './data/'
 SHARP_COUNT = 100
+
 # Simple output separator for the terminal displays
 def separate_output(str):
     '''
@@ -63,6 +64,7 @@ print(test_data.shape)
 # General analysis of data
 separate_output("General Data Knowledge")
 print(train_data.describe())
+print(train_data)
 
 # These columns will be dropped
 DROPPED_COLS = ['PassengerId',
@@ -75,13 +77,13 @@ DROPPED_COLS = ['PassengerId',
 train_data.drop(DROPPED_COLS, axis=1, inplace=True)
 
 # Get the shape of data
-separate_output("Train/Test Shapes -- Dropped PassengerId")
+separate_output("Train/Test Shapes -- Dropped 5 Columns")
 print(train_data.shape)
 print(test_data.shape)
 
 # General analysis of data
-separate_output("General Data Knowledge -- Dropped PassengerId")
-print(train_data.describe())
+separate_output("How Data Looks Like -- Dropped Some Columns")
+print(train_data)
 
 # Check if the gender affect the survivals
 # Plot the figures for male and female
@@ -108,18 +110,40 @@ train_data['Sex'] = LabelEncoder().fit_transform(train_data['Sex'])
 train_data = fill_with_mean(train_data)
 
 # Scale the data to normalize the mean and variance
-ss = StandardScaler().fit(train_data)
+# ss = StandardScaler().fit(train_data)
 
 # Display the data again
 separate_output("Final Data")
-train_data = pd.DataFrame(ss.transform(train_data))
+columns_stack = [
+    'Survived',
+    'Pclass',
+    'Sex',
+    'Age',
+    'SibSp',
+    'Parch',
+    'Fare'
+]
+# train_data = pd.DataFrame(ss.transform(train_data))
+train_data.columns = columns_stack
+
 print(train_data)
 
 # Describe the status of final data
 separate_output("Final Data Description")
 print(train_data.describe())
 
+# An array containing models
+MODELS = [
+    MLPClassifier(),
+    AdaBoostClassifier(),
+    SVC(),
+    QuadraticDiscriminantAnalysis(),
+    GaussianProcessClassifier()
+]
 
+# Split the train and test data
+train_labels = train_data['Survived']
+train_data.drop('Survived', axis=1, inplace=True)
 
-
-
+for model in MODELS:
+    model.fit(train_data, train_labels)
