@@ -18,6 +18,9 @@ DATA_ROOT = './data/'
 SHARP_COUNT = 100
 # Simple output separator for the terminal displays
 def separate_output(str):
+    '''
+        Displays an string as an argument in a clear form
+    '''
     print('\n')
     for i in range(SHARP_COUNT):
         if(i == SHARP_COUNT-1):
