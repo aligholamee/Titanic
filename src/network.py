@@ -52,8 +52,14 @@ print(test_data.shape)
 separate_output("General Data Knowledge")
 print(train_data.describe())
 
+# These columns will be dropped
+DROPPED_COLS = ['PassengerId',
+                'Name',
+                'Ticket',
+                'Cabin']
+
 # Drop the PassengerId column
-train_data.drop('PassengerId', axis=1, inplace=True)
+train_data.drop(DROPPED_COLS, axis=1, inplace=True)
 
 # Get the shape of data
 separate_output("Train/Test Shapes -- Dropped PassengerId")
