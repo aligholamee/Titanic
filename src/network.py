@@ -151,3 +151,5 @@ for model in MODELS:
     model.fit(X_train, y_train)
     score = model.score(X_test, y_test)
     print(score)
+
+# Using PYCM to display the exact accuracy and the results
