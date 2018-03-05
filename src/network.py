@@ -13,6 +13,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
 
 DATA_ROOT = './data/'
 SHARP_COUNT = 100
@@ -76,3 +77,15 @@ female_survival = fig.add_subplot(122)
 train_data.Survived[train_data['Sex'] == 'female'].value_counts().plot(kind='pie')
 female_survival.set_title("Female Survivals")
 plt.show()
+
+# Let's see the data types
+separate_output("Datatypes")
+print(train_data.select_dtypes(include=[object]))
+
+# Convert the categorical data into numerical form
+train_data['Sex'] = LabelEncoder().fit_transform(train_data['Sex'])
+
+# Display the data again
+separate_output("Final Data")
+print(train_data)
+
