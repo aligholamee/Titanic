@@ -157,5 +157,3 @@ for model in MODELS:
 
     print("Recall: ", rscore)
     print("F-1 Score: ", f1score)
-    # score = recall_score(y_train, y_pred)
-    # print(score)
